@@ -113,12 +113,6 @@ public class ClientPlaySessionHandler implements MinecraftSessionHandler {
 
   // I will not allow hacks to bypass this;
   private boolean tickLastMessage(SignedChatMessage nextMessage) {
-    if (lastChatMessage != null && lastChatMessage.isAfter(nextMessage.getExpiryTemporal())) {
-      player.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"));
-      return false;
-    }
-
-    lastChatMessage = nextMessage.getExpiryTemporal();
     return true;
   }
 
