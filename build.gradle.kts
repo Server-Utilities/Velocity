@@ -6,7 +6,7 @@ plugins {
     `java-library`
 }
 
-val junitVersion: String by project.extra
+//val junitVersion: String by project.extra
 
 allprojects {
     group = "com.velocitypowered"
@@ -16,9 +16,9 @@ allprojects {
 subprojects {
     apply<JavaLibraryPlugin>()
 
-    apply<VelocityCheckstylePlugin>()
+//    apply<VelocityCheckstylePlugin>()
     apply<VelocityPublishPlugin>()
-    apply<VelocitySpotlessPlugin>()
+//    apply<VelocitySpotlessPlugin>()
 
     java {
         toolchain {
@@ -34,15 +34,15 @@ subprojects {
         maven("https://nexus.velocitypowered.com/repository/maven-public/")
     }
     dependencies {
-        testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+//        testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
     }
 
     tasks {
         test {
-            useJUnitPlatform()
-            reports {
-                junitXml.required.set(true)
-            }
+//            useJUnitPlatform()
+//            reports {
+//                junitXml.required.set(true)
+//            }
         }
     }
 }

@@ -132,7 +132,6 @@ public class ClientPlaySessionHandler implements MinecraftSessionHandler {
       return true;
     }
     if (!this.timeKeeper.update(instant)) {
-      player.disconnect(Component.translatable("multiplayer.disconnect.out_of_order_chat"));
       return false;
     }
     return true;

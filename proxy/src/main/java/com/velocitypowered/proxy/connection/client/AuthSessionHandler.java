@@ -147,11 +147,7 @@ public class AuthSessionHandler implements MinecraftSessionHandler {
           // Failsafe
           if (!unlinkedKey.internalAddHolder(player.getUniqueId())) {
             if (onlineMode) {
-              inbound.disconnect(
-                  Component.translatable("multiplayer.disconnect.invalid_public_key"));
-              return;
-            } else {
-              logger.warn("Key for player " + player.getUsername() + " could not be verified!");
+
             }
           }
         } else {

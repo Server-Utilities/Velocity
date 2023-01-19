@@ -91,12 +91,6 @@ public class InitialLoginSessionHandler implements MinecraftSessionHandler {
     this.currentState = LoginState.LOGIN_PACKET_RECEIVED;
     IdentifiedKey playerKey = packet.getPlayerKey();
     if (playerKey != null) {
-      if (playerKey.hasExpired()) {
-        inbound.disconnect(
-            Component.translatable("multiplayer.disconnect.invalid_public_key_signature"));
-        return true;
-      }
-
       boolean isKeyValid;
       if (playerKey.getKeyRevision() == IdentifiedKey.Revision.LINKED_V2
           && playerKey instanceof IdentifiedKeyImpl) {
@@ -105,16 +99,9 @@ public class InitialLoginSessionHandler implements MinecraftSessionHandler {
       } else {
         isKeyValid = playerKey.isSignatureValid();
       }
-
-      if (!isKeyValid) {
-        inbound.disconnect(Component.translatable("multiplayer.disconnect.invalid_public_key"));
-        return true;
-      }
     } else if (mcConnection.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19) >= 0
         && forceKeyAuthentication
         && mcConnection.getProtocolVersion().compareTo(ProtocolVersion.MINECRAFT_1_19_3) < 0) {
-      inbound.disconnect(Component.translatable("multiplayer.disconnect.missing_public_key"));
-      return true;
     }
     inbound.setPlayerKey(playerKey);
     this.login = packet;
@@ -241,8 +228,6 @@ public class InitialLoginSessionHandler implements MinecraftSessionHandler {
                 && inbound.getIdentifiedKey() instanceof IdentifiedKeyImpl) {
               IdentifiedKeyImpl key = (IdentifiedKeyImpl) inbound.getIdentifiedKey();
               if (!key.internalAddHolder(profile.getId())) {
-                inbound.disconnect(
-                    Component.translatable("multiplayer.disconnect.invalid_public_key"));
               }
             }
             // All went well, initialize the session.
