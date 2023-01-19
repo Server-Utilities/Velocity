@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Velocity Contributors
+ * Copyright (C) 2018-2023 Velocity Contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,6 @@ import com.velocitypowered.proxy.server.VelocityRegisteredServer;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
-import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +55,9 @@ import java.util.function.UnaryOperator;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+/**
+ * Handles a connection from the proxy to some backend server.
+ */
 public class VelocityServerConnection implements MinecraftConnectionAssociation, ServerConnection {
 
   private final VelocityRegisteredServer registeredServer;
@@ -71,10 +73,11 @@ public class VelocityServerConnection implements MinecraftConnectionAssociation,
 
   /**
    * Initializes a new server connection.
+   *
    * @param registeredServer the server to connect to
-   * @param previousServer the server the player is coming from
-   * @param proxyPlayer the player connecting to the server
-   * @param server the Velocity proxy instance
+   * @param previousServer   the server the player is coming from
+   * @param proxyPlayer      the player connecting to the server
+   * @param server           the Velocity proxy instance
    */
   public VelocityServerConnection(VelocityRegisteredServer registeredServer,
       @Nullable VelocityRegisteredServer previousServer,
@@ -87,6 +90,7 @@ public class VelocityServerConnection implements MinecraftConnectionAssociation,
 
   /**
    * Connects to the server.
+   *
    * @return a {@link com.velocitypowered.api.proxy.ConnectionRequestBuilder.Result} representing
    *         whether or not the connect succeeded
    */
@@ -205,6 +209,7 @@ public class VelocityServerConnection implements MinecraftConnectionAssociation,
 
   /**
    * Ensures the connection is still active and throws an exception if it is not.
+   *
    * @return the active connection
    * @throws IllegalStateException if the connection is inactive
    */
@@ -259,8 +264,9 @@ public class VelocityServerConnection implements MinecraftConnectionAssociation,
 
   /**
    * Sends a plugin message to the server through this connection.
+   *
    * @param identifier the channel ID to use
-   * @param data the data
+   * @param data       the data
    * @return whether or not the message was sent
    */
   public boolean sendPluginMessage(ChannelIdentifier identifier, ByteBuf data) {
@@ -310,9 +316,8 @@ public class VelocityServerConnection implements MinecraftConnectionAssociation,
   }
 
   /**
-   * Gets the current "phase" of the connection, mostly used for tracking
-   * modded negotiation for legacy forge servers and provides methods
-   * for performing phase specific actions.
+   * Gets the current "phase" of the connection, mostly used for tracking modded negotiation for
+   * legacy forge servers and provides methods for performing phase specific actions.
    *
    * @return The {@link BackendConnectionPhase}
    */
@@ -330,8 +335,8 @@ public class VelocityServerConnection implements MinecraftConnectionAssociation,
   }
 
   /**
-   * Gets whether the {@link com.velocitypowered.proxy.protocol.packet.JoinGame}
-   * packet has been sent by this server.
+   * Gets whether the {@link com.velocitypowered.proxy.protocol.packet.JoinGame} packet has been
+   * sent by this server.
    *
    * @return Whether the join has been completed.
    */
